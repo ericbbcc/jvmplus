@@ -1,6 +1,8 @@
 package com.jvmplus.front.controller;
 
+import com.jvmplus.bo.BlogDetailBO;
 import com.jvmplus.bo.BlogEditorBO;
+import com.jvmplus.builder.BlogDetailBOBuilder;
 import com.jvmplus.builder.BlogEditorBOBuilder;
 import com.jvmplus.service.IBlogService;
 import com.jvmplus.service.ICatalogService;
@@ -9,6 +11,8 @@ import com.jvmplus.vo.Blog;
 import com.jvmplus.vo.Catalog;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -30,7 +34,11 @@ public class BlogController {
     @RequestMapping("add")
     @ResponseBody
     public String insert(Model model,Blog blog, Catalog catalog){
-        BlogEditorBO blogEditorBO = BlogEditorBOBuilder.me().setBlog(blog).setCatalog(catalog).build();
+        BlogEditorBO blogEditorBO = BlogEditorBOBuilder
+                .me()
+                .setBlog(blog)
+                .setCatalog(catalog)
+                .setUser(SessionUtils.getCurrentUser()).build();
         blogService.saveBlogEditorBO(blogEditorBO);
         return "success";
     }
@@ -40,5 +48,24 @@ public class BlogController {
         List<Catalog> catalogList = catalogService.findCatalogsByUser(SessionUtils.getCurrentUser());
         model.addAttribute("catalogList",catalogList);
         return "editor";
+    }
+
+    @RequestMapping("view/{id}")
+    public String viewDetail(Model model, @PathVariable String id){
+        Blog blog = null;
+        if(StringUtils.hasText(id)){
+            blog = blogService.findById(id);
+        }
+        if(blog == null){
+            blog = blogService.findTheLastOne();
+        }
+        List<Catalog> catalogs = catalogService.findCatalogsByUser(SessionUtils.getCurrentUser());
+        BlogDetailBO blogDetailBO = BlogDetailBOBuilder
+                .me()
+                .setBlog(blog)
+                .setCatalogList(catalogs)
+                .setUser(SessionUtils.getCurrentUser()).build();
+        model.addAttribute("detail", blogDetailBO);
+        return "index";
     }
 }

@@ -9,4 +9,5 @@ import com.jvmplus.vo.Blog;
 public interface IBlogService {
     public void saveBlogEditorBO(BlogEditorBO blogEditorBO);
     public Blog findTheLastOne();
+    public Blog findById(String id);
 }

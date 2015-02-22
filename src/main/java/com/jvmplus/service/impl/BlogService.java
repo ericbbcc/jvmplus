@@ -4,6 +4,7 @@ import com.jvmplus.bo.BlogEditorBO;
 import com.jvmplus.dao.BlogMapper;
 import com.jvmplus.service.IBlogService;
 import com.jvmplus.util.IDgenerator;
+import com.jvmplus.util.SessionUtils;
 import com.jvmplus.vo.Blog;
 import com.jvmplus.vo.BlogExample;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by andy on 2/22/15.
@@ -30,6 +32,9 @@ public class BlogService implements IBlogService {
 
 
     private void completeBlogInfo(BlogEditorBO blogEditorBO){
+        if(!StringUtils.hasText(blogEditorBO.getBlog().getUserId())){
+            blogEditorBO.getBlog().setUserId(blogEditorBO.getUser().getUserId());
+        }
         if(!StringUtils.hasText(blogEditorBO.getBlog().getBlogId())){
             blogEditorBO.getBlog().setBlogId(IDgenerator.blogId());
         }
@@ -43,6 +48,15 @@ public class BlogService implements IBlogService {
     @Override
     public Blog findTheLastOne() {
         BlogExample example = new BlogExample();
-        return null;
+        example.createCriteria().andUserIdEqualTo(SessionUtils.getCurrentUser().getUserId());
+        List<Blog> blogList = blogMapper.selectByExample(example);
+        if(blogList.size() == 0)
+            blogList.add(new Blog());
+        return blogMapper.selectByPrimaryKey(blogList.get(0).getBlogId());
+    }
+
+    @Override
+    public Blog findById(String id) {
+        return blogMapper.selectByPrimaryKey(id);
     }
 }

@@ -8,14 +8,10 @@
 </div>
 <div class="row" style="padding-right: 60px;padding-left: 60px;">
     <div class="catalog"><!--分类-->
-        <label class="radio-inline">
-            <input type="radio" name="cata" id="cata1" value="option1"> JVM
-        </label>
-        <label class="radio-inline">
-            <input type="radio" name="cata" id="cata2" value="option2"> JAVA Web
-        </label>
-        <label class="radio-inline">
-            <input type="radio" name="cata" id="cata3" value="option3"> Spring
-        </label>
+        <#list catalogList as cata>
+            <label class="radio-inline">
+                <input type="radio" name="cata" id="${cata.catalogId!}" value="${cata.catalogId!}"> ${cata.catalogName!}
+            </label>
+        </#list>
     </div>
 </div>

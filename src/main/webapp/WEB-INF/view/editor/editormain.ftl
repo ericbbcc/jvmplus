@@ -51,8 +51,7 @@
         </div>
         <input type="text" data-edit="inserttext" id="voiceBtn" x-webkit-speech="" style="display: none;">
         <div class="btn-group" style="float:right">
-            <input class="btn btn-default" type="button" value="保存">
-            <input class="btn btn-default" type="button" value="编辑">
+            <input class="btn btn-default" type="button" value="保存" id="save-editor" >
         </div>
 
     </div>

@@ -20,7 +20,7 @@ import java.util.List;
 public class CatalogService implements ICatalogService {
     private static final Logger LOG = LoggerFactory.getLogger(CatalogService.class);
 
-    @Resource(name="calalogDao")
+    @Resource(name="catalogDao")
     private CatalogMapper catalogMapper;
     @Override
     public List<Catalog> findCatalogsByUser(User user) {
