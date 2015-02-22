@@ -2,7 +2,7 @@
     <div class="blog-header" style="padding-left: 60px;padding-right: 60px;padding-bottom: 10px;">
         <div class="input-group input-group-lg">
             <span class="input-group-addon" id="sizing-addon1">标题</span>
-            <input type="text" class="form-control" placeholder="在此写标题..." aria-describedby="sizing-addon1">
+            <input id="blogtitle" type="text" class="form-control" placeholder="在此写标题..." aria-describedby="sizing-addon1">
         </div>
     </div>
 </div>
