@@ -10,7 +10,7 @@ var saveeditor = function saveeditor(){
 
     $.ajax({
         type:"POST",
-        url:window.location.origin + "/jvmplus/blog/add",
+        url:window.location.origin + "/blog/add",
         data:{blogTitle:title,blogContent:blog_content,catalogId:catalog_id},
         success:function(data){
             if(data == "success"){

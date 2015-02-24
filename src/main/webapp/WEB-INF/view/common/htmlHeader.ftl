@@ -20,6 +20,6 @@
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
     <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <link href="/jvmplus/resources/css/blog.css" rel="stylesheet">
+    <link href="/resources/css/blog.css" rel="stylesheet">
 </head>
 <body>

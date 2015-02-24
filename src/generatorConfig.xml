@@ -7,6 +7,7 @@
     <!-- 数据库驱动包 -->
     <classPathEntry location="/Users/andy/.gradle/caches/modules-2/files-2.1/mysql/mysql-connector-java/5.1.34/46deba4adbdb4967367b013cbc67b7f7373da60a/mysql-connector-java-5.1.34.jar" />
     <context id="aisSnsTables" targetRuntime="MyBatis3">
+        <plugin type="com.jvmplus.util.PaginationPlugin" />
         <jdbcConnection
                 driverClass="com.mysql.jdbc.Driver"
                 connectionURL="jdbc:mysql://localhost:3306/jvmplus?useUnicode=true"

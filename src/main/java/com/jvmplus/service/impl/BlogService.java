@@ -1,12 +1,15 @@
 package com.jvmplus.service.impl;
 
 import com.jvmplus.bo.BlogEditorBO;
+import com.jvmplus.bo.PaginationBO;
 import com.jvmplus.dao.BlogMapper;
 import com.jvmplus.service.IBlogService;
 import com.jvmplus.util.IDgenerator;
 import com.jvmplus.util.SessionUtils;
 import com.jvmplus.vo.Blog;
 import com.jvmplus.vo.BlogExample;
+import com.jvmplus.vo.Catalog;
+import com.jvmplus.vo.User;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -49,14 +52,36 @@ public class BlogService implements IBlogService {
     public Blog findTheLastOne() {
         BlogExample example = new BlogExample();
         example.createCriteria().andUserIdEqualTo(SessionUtils.getCurrentUser().getUserId());
-        List<Blog> blogList = blogMapper.selectByExample(example);
-        if(blogList.size() == 0)
-            blogList.add(new Blog());
-        return blogMapper.selectByPrimaryKey(blogList.get(0).getBlogId());
+        example.setOrderByClause("create_date desc");
+        example.setLimitStart(0);
+        example.setLimitEnd(1);
+        List<Blog> blogs = blogMapper.selectByExampleWithBLOBs(example);
+        return blogs.size() > 0 ? blogs.get(0) : new Blog();
     }
 
     @Override
     public Blog findById(String id) {
         return blogMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public PaginationBO<Blog> listBlogByCatalog(User user, Catalog catalog, PaginationBO<Blog> paginationBO) {
+        Assert.notNull(paginationBO, "paginationBO must not be null.");
+        Assert.state(paginationBO.getPage() >= 0, "page must be right.");
+        Assert.state(paginationBO.getPageSize() > 0, "pageSize must be right.");
+        BlogExample example = new BlogExample();
+        example.setLimitStart((paginationBO.getPage() -1) * paginationBO.getPage() - 1);
+        example.setLimitEnd(paginationBO.getPageSize());
+        example.createCriteria()
+                .andUserIdEqualTo(user.getUserId())
+                .andCatalogIdEqualTo(catalog.getCatalogId());
+        List<Blog> blogs = blogMapper.selectByExampleWithBLOBs(example);
+        paginationBO.setDataList(blogs);
+        return paginationBO;
+    }
+
+    @Override
+    public void delById(String blogId) {
+        blogMapper.deleteByPrimaryKey(blogId);
     }
 }

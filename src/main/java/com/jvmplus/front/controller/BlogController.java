@@ -66,6 +66,8 @@ public class BlogController {
                 .setCatalogList(catalogs)
                 .setUser(SessionUtils.getCurrentUser()).build();
         model.addAttribute("detail", blogDetailBO);
+        model.addAttribute("catalogList",catalogs);
         return "index";
     }
+
 }
