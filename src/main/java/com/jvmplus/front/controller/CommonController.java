@@ -11,7 +11,7 @@ public class CommonController {
 
     @RequestMapping("/")
     public String main(){
-        return "redirect:/blog/view/hello";
+        return "forward:/blog/view/hello";
     }
 
 }

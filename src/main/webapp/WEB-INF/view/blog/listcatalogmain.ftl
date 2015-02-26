@@ -13,8 +13,16 @@
     <#if paginationBO.dataList?size gt 0>
         <nav>
             <ul class="pager">
-                <li><a href="#">上一页</a></li>
-                <li><a href="#">下一页</a></li>
+                <#if paginationBO.page == 0>
+                    <li><a href="#" style="color:#CCC">上一页</a></li>
+                <#else>
+                    <li><a href="/blog/beforeYe/${catalogId!}/${paginationBO.page!}/${paginationBO.pageSize!}">上一页</a></li>
+                </#if>
+                <#if paginationBO.page == (paginationBO.total - 1)>
+                    <li><a href="#" style="color: #CCC">下一页</a></li>
+                <#else>
+                    <li><a href="/blog/nextYe/${catalogId!}/${paginationBO.page!}/${paginationBO.pageSize!}">下一页</a></li>
+                </#if>
             </ul>
         </nav>
     <#else >

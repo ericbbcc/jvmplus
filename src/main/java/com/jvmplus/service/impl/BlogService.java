@@ -15,8 +15,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by andy on 2/22/15.
@@ -77,11 +76,50 @@ public class BlogService implements IBlogService {
                 .andCatalogIdEqualTo(catalog.getCatalogId());
         List<Blog> blogs = blogMapper.selectByExampleWithBLOBs(example);
         paginationBO.setDataList(blogs);
+        paginationBO.setTotal((blogs.size() / paginationBO.getPageSize()) + 1);
         return paginationBO;
     }
 
     @Override
     public void delById(String blogId) {
         blogMapper.deleteByPrimaryKey(blogId);
+    }
+
+    @Override
+    public Blog nextBlog(User user, String blogId) {
+        BlogExample example = new BlogExample();
+        example.createCriteria().andUserIdEqualTo(user.getUserId());
+        List<Blog> blogs = blogMapper.selectByExample(example);
+        if(blogs.size() < 1)
+            return null;
+        Iterator<Blog> blogIterator = blogs.iterator();
+        while (blogIterator.hasNext()){
+            if(blogIterator.next().getBlogId().equals(blogId))
+                break;
+        }
+        if(blogIterator.hasNext())
+            return blogIterator.next();
+        else
+            return blogs.get(0);
+    }
+
+
+    @Override
+    public Blog beforeBlog(User user, String blogId) {
+        BlogExample example = new BlogExample();
+        example.createCriteria().andUserIdEqualTo(user.getUserId());
+        List<Blog> blogs = blogMapper.selectByExample(example);
+        Collections.reverse(blogs);
+        if(blogs.size() < 1)
+            return null;
+        Iterator<Blog> blogIterator = blogs.iterator();
+        while (blogIterator.hasNext()){
+            if(blogIterator.next().getBlogId().equals(blogId))
+                break;
+        }
+        if(blogIterator.hasNext())
+            return blogIterator.next();
+        else
+            return blogs.get(0);
     }
 }

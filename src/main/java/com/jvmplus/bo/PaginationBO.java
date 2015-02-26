@@ -8,6 +8,7 @@ import java.util.List;
 public class PaginationBO<T> {
     private int pageSize;
     private int page;
+    private int total;
     private List<T> dataList;
 
     public int getPageSize() {
@@ -32,5 +33,13 @@ public class PaginationBO<T> {
 
     public void setDataList(List<T> dataList) {
         this.dataList = dataList;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
     }
 }

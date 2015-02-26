@@ -56,4 +56,39 @@ public class ListController {
         blogService.delById(blogId);
         return "list"+"/"+catalogId;
     }
+
+    @RequestMapping("nextYe/{catalogId}/{page}/{pageSize}")
+    public String nextYe(Model model, @PathVariable String catalogId,@PathVariable String page, @PathVariable String pageSize){
+        Catalog catalog = new Catalog();
+        catalog.setCatalogId(catalogId);
+        PaginationBO<Blog> paginationBO = new PaginationBO<>();
+        paginationBO.setPage(Integer.valueOf(page));
+        paginationBO.setPageSize(Integer.valueOf(pageSize));
+        blogService.listBlogByCatalog(SessionUtils.getCurrentUser(),catalog,paginationBO);
+        List<Catalog> catalogs = catalogService.findCatalogsByUser(SessionUtils.getCurrentUser());
+        model.addAttribute("paginationBO",paginationBO);
+        model.addAttribute("listcatalog",true);
+        model.addAttribute("catalogList",catalogs);
+        model.addAttribute("user", SessionUtils.getCurrentUser());
+        model.addAttribute("catalogId",catalogId);
+        return "list";
+    }
+
+    @RequestMapping("beforeYe/{catalogId}/{page}/{pageSize}")
+    public String beforeYe(Model model, @PathVariable String catalogId,@PathVariable String page, @PathVariable String pageSize){
+        Catalog catalog = new Catalog();
+        catalog.setCatalogId(catalogId);
+        PaginationBO<Blog> paginationBO = new PaginationBO<>();
+        paginationBO.setPage(Integer.valueOf(page) - 1);
+        paginationBO.setPageSize(Integer.valueOf(pageSize));
+        blogService.listBlogByCatalog(SessionUtils.getCurrentUser(),catalog,paginationBO);
+        List<Catalog> catalogs = catalogService.findCatalogsByUser(SessionUtils.getCurrentUser());
+        model.addAttribute("paginationBO",paginationBO);
+        model.addAttribute("listcatalog",true);
+        model.addAttribute("catalogList",catalogs);
+        model.addAttribute("user", SessionUtils.getCurrentUser());
+        model.addAttribute("catalogId",catalogId);
+        return "list";
+    }
+
 }

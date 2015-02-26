@@ -17,4 +17,6 @@ public interface IBlogService {
     public Blog findById(String id);
     public PaginationBO<Blog> listBlogByCatalog(User user, Catalog catalog, PaginationBO<Blog> paginationBO);
     public void delById(String blogId);
+    public Blog nextBlog(User user, String blogId);
+    public Blog beforeBlog(User user, String blogId);
 }

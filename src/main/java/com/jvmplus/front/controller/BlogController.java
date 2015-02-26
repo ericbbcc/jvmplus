@@ -2,6 +2,7 @@ package com.jvmplus.front.controller;
 
 import com.jvmplus.bo.BlogDetailBO;
 import com.jvmplus.bo.BlogEditorBO;
+import com.jvmplus.bo.PaginationBO;
 import com.jvmplus.builder.BlogDetailBOBuilder;
 import com.jvmplus.builder.BlogEditorBOBuilder;
 import com.jvmplus.service.IBlogService;
@@ -69,5 +70,19 @@ public class BlogController {
         model.addAttribute("catalogList",catalogs);
         return "index";
     }
+
+    @RequestMapping("next/{blogId}")
+    public String nextItem(@PathVariable String blogId){
+        Blog  blog = blogService.nextBlog(SessionUtils.getCurrentUser(),blogId);
+        return "redirect:/blog/view/"  + blog.getBlogId();
+    }
+
+
+    @RequestMapping("before/{blogId}")
+    public String beforeItem(@PathVariable String blogId){
+        Blog  blog = blogService.beforeBlog(SessionUtils.getCurrentUser(), blogId);
+        return "redirect:/blog/view/"  + blog.getBlogId();
+    }
+
 
 }

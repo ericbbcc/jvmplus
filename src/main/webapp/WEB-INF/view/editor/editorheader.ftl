@@ -13,5 +13,6 @@
                 <input type="radio" name="cata" id="${cata.catalogId!}" value="${cata.catalogId!}"> ${cata.catalogName!}
             </label>
         </#list>
+        <input value="添加" type="button" id="addCata" onclick="addCata(this);">
     </div>
 </div>

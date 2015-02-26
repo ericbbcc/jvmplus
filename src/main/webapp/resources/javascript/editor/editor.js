@@ -21,3 +21,25 @@ var saveeditor = function saveeditor(){
         }
     });
 }
+
+var addCata = function addCata(obj){
+    $(obj).attr("type","text");
+    $(obj).val("");
+    $(obj).attr("id","newCata");
+    $(obj).attr("onclick","void();");
+    $('div[class=catalog]').append("<input value=\"保存\" type=\"button\" id=\"saveNewCata\">");
+    $('#saveNewCata').click(function(){
+        if($('#newCata').val() == ""){
+            alert("类别名称不能为空");
+            return;
+        }
+        $.ajax({
+            type:"POST",
+            url:window.location.origin + "/cata/save",
+            data:{name:$('#newCata').val()},
+            success:function(data){
+               window.location.href = data;
+            }
+        });
+    });
+}

@@ -11,8 +11,8 @@
 
     <nav>
         <ul class="pager">
-            <li><a href="#">上一篇</a></li>
-            <li><a href="#">下一篇</a></li>
+            <li><a href="/blog/before/${detail.blog.blogId!}">上一篇</a></li>
+            <li><a href="/blog/next/${detail.blog.blogId!}">下一篇</a></li>
         </ul>
     </nav>
 
