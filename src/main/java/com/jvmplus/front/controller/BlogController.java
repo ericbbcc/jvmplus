@@ -7,6 +7,7 @@ import com.jvmplus.builder.BlogDetailBOBuilder;
 import com.jvmplus.builder.BlogEditorBOBuilder;
 import com.jvmplus.service.IBlogService;
 import com.jvmplus.service.ICatalogService;
+import com.jvmplus.util.IDgenerator;
 import com.jvmplus.util.SessionUtils;
 import com.jvmplus.vo.Blog;
 import com.jvmplus.vo.Catalog;
@@ -34,14 +35,16 @@ public class BlogController {
 
     @RequestMapping("add")
     @ResponseBody
-    public String insert(Model model,Blog blog, Catalog catalog){
+    public String insert(Blog blog, Catalog catalog){
+        String blogId = IDgenerator.blogId();
+        blog.setBlogId(blogId);
         BlogEditorBO blogEditorBO = BlogEditorBOBuilder
                 .me()
                 .setBlog(blog)
                 .setCatalog(catalog)
                 .setUser(SessionUtils.getCurrentUser()).build();
         blogService.saveBlogEditorBO(blogEditorBO);
-        return "success";
+        return "/blog/view/" + blogId;
     }
 
     @RequestMapping("editor")

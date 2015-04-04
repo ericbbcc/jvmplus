@@ -37,9 +37,6 @@ public class BlogService implements IBlogService {
         if(!StringUtils.hasText(blogEditorBO.getBlog().getUserId())){
             blogEditorBO.getBlog().setUserId(blogEditorBO.getUser().getUserId());
         }
-        if(!StringUtils.hasText(blogEditorBO.getBlog().getBlogId())){
-            blogEditorBO.getBlog().setBlogId(IDgenerator.blogId());
-        }
         if(null == blogEditorBO.getBlog().getCreateDate()){
             blogEditorBO.getBlog().setCreateDate(new Date());
         }

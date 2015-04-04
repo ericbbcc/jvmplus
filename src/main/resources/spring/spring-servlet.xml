@@ -17,6 +17,7 @@
     <mvc:resources mapping="/resources/css/**" location="/resources/css/"/>
     <mvc:resources mapping="/resources/javascript/**" location="/resources/javascript/"/>
     <mvc:resources mapping="/resources/font/**" location="/resources/font/"/>
+    <mvc:resources mapping="/resources/error/**" location="/resources/error/"/>
 
     <import resource="spring-freemarker.xml"></import>
 </beans>

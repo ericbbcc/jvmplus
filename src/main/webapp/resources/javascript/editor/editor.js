@@ -13,11 +13,7 @@ var saveeditor = function saveeditor(){
         url:window.location.origin + "/blog/add",
         data:{blogTitle:title,blogContent:blog_content,catalogId:catalog_id},
         success:function(data){
-            if(data == "success"){
-                alert("保存成功！");
-            }else{
-                alert(date);
-            }
+            window.location.href = data;
         }
     });
 }

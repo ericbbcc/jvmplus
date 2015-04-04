@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -49,12 +50,13 @@ public class ListController {
         return "list";
     }
 
-    @RequestMapping("del/${blogId}")
-    public String delItem(@PathVariable String catalogId,@PathVariable String blogId){
+    @RequestMapping("del/{blogId}")
+    @ResponseBody
+    public String delItem(@PathVariable String blogId){
         if(StringUtils.isEmpty(blogId))
-            return "list"+"/"+catalogId;
+            return "error";
         blogService.delById(blogId);
-        return "list"+"/"+catalogId;
+        return "success";
     }
 
     @RequestMapping("nextYe/{catalogId}/{page}/{pageSize}")
